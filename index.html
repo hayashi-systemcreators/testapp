@@ -1,1 +1,41 @@
-<html><h1>!Hello World!</h1></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Example</title>
+</head>
+<body>
+    <h1>Fetch Example</h1>
+    <div id="messages"></div>
+
+    <script>
+        // メッセージを取得する関数
+        async function getMessages() {
+            try {
+                const response = await fetch('/api/messages');
+                const messages = await response.json();
+                displayMessages(messages);
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+            }
+        }
+
+        // メッセージを表示する関数
+        function displayMessages(messages) {
+            const messagesElement = document.getElementById('messages');
+            messagesElement.innerHTML = '';
+            messages.forEach(message => {
+                const messageElement = document.createElement('div');
+                messageElement.textContent = message;
+                messagesElement.appendChild(messageElement);
+            });
+        }
+
+        // ページが読み込まれた時にメッセージを取得する
+        document.addEventListener('DOMContentLoaded', () => {
+            getMessages();
+        });
+    </script>
+</body>
+</html>
